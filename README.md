@@ -1,29 +1,13 @@
-# marathon_report
+# 马拉松年度报告
 
-#### 介绍
-2025_marathon_report
+轻量的年度跑步总结页面，用图表和时间线记录每一场马拉松。
 
-#### 软件架构
-软件架构说明
+## 查看
+- 完整版: index.html
+- 一页速览: index_one_page.html
 
+## 本地预览
+- 直接双击 HTML 或用任意静态服务器打开仓库根目录。
 
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
+## 贡献
+- 欢迎提 PR，保持版式简洁、数据真实。
