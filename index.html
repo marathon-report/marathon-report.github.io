@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2025 · cold 的马拉松年度报告</title>
+    <title>2025 · 你的马拉松年度报告</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
         
@@ -340,56 +340,31 @@
             font-size: 1.2em;
         }
         
-        .next-btn {
+        .hint-text {
             position: fixed;
             bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(90deg, #00d9ff, #ff6b9d);
-            border: none;
-            color: #fff;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 1.1em;
-            cursor: pointer;
-            font-family: 'Noto Sans SC', sans-serif;
-            box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
-            transition: all 0.3s ease;
+            font-size: 0.85em;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 2px;
             z-index: 100;
-            animation: pulse 2s infinite;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+            animation: breathe 3s ease-in-out infinite;
         }
         
-        @keyframes pulse {
+        @keyframes breathe {
             0%, 100% {
-                transform: translateX(-50%) scale(1);
+                opacity: 0.4;
             }
             50% {
-                transform: translateX(-50%) scale(1.05);
+                opacity: 0.7;
             }
         }
         
-        .next-btn:hover {
-            transform: translateX(-50%) scale(1.1);
-            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.6);
-        }
-        
-        .next-btn:active {
-            transform: translateX(-50%) scale(0.95);
-        }
-        
-        .next-btn.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-        
-        .page-indicator {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.5);
-            z-index: 100;
+        .hint-text:hover {
+            opacity: 0.8;
         }
         
         .decorative-circle {
@@ -452,7 +427,7 @@
         <div class="decorative-circle" style="width: 300px; height: 300px; top: 10%; left: 10%;"></div>
         <div class="decorative-circle" style="width: 200px; height: 200px; bottom: 20%; right: 10%; animation-delay: 2s;"></div>
         <div class="slide-content">
-            <div class="title">2025<br>cold 的马拉松年度报告</div>
+            <div class="title">2025<br>你的马拉松年度报告</div>
             <div class="subtitle">这一年，你用脚步丈量了城市<br>从春天跑到冬天</div>
             <div class="subtitle" style="margin-top: 40px; font-size: 0.9em; color: rgba(255, 255, 255, 0.5);">4场赛事 · 97.195公里 · 10小时42分</div>
         </div>
@@ -662,29 +637,32 @@
         </div>
     </div>
     
-    <button class="next-btn" id="nextBtn">下一步</button>
-    <div class="page-indicator" id="pageIndicator"></div>
+    <div class="hint-text" id="hintText">上滑或点击继续</div>
     
     <script>
         let currentPage = 1;
         const totalPages = 10;
-        const nextBtn = document.getElementById('nextBtn');
+        const hintText = document.getElementById('hintText');
         const progressBar = document.getElementById('progressBar');
-        const pageIndicator = document.getElementById('pageIndicator');
+        let isAnimating = false;
         
         function updateProgress() {
             const progress = ((currentPage - 1) / (totalPages - 1)) * 100;
             progressBar.style.width = progress + '%';
-            pageIndicator.textContent = `${currentPage} / ${totalPages}`;
             
+            // 更新提示文字
             if (currentPage === totalPages) {
-                nextBtn.textContent = '重新开始';
+                hintText.textContent = '点击重新开始';
             } else {
-                nextBtn.textContent = '下一步';
+                hintText.textContent = '上滑或点击继续';
             }
         }
         
         function showPage(pageNum) {
+            // 防止动画期间重复触发
+            if (isAnimating) return;
+            isAnimating = true;
+            
             // 隐藏所有页面
             document.querySelectorAll('.slide').forEach(slide => {
                 slide.classList.remove('active');
@@ -692,17 +670,24 @@
             
             // 显示当前页面
             const currentPageEl = document.querySelector(`.slide[data-page="${pageNum}"]`);
-            currentPageEl.classList.add('active');
-            
-            // 重新触发动画
-            const content = currentPageEl.querySelector('.slide-content');
-            if (content) {
-                content.style.animation = 'none';
-                content.offsetHeight; // 触发重排
-                content.style.animation = 'fadeInUp 1s ease';
+            if (currentPageEl) {
+                currentPageEl.classList.add('active');
+                
+                // 重新触发动画
+                const content = currentPageEl.querySelector('.slide-content');
+                if (content) {
+                    content.style.animation = 'none';
+                    content.offsetHeight; // 触发重排
+                    content.style.animation = 'fadeInUp 1s ease';
+                }
             }
             
             updateProgress();
+            
+            // 动画结束后允许下一次切换
+            setTimeout(() => {
+                isAnimating = false;
+            }, 800);
         }
         
         function nextPage() {
@@ -716,40 +701,91 @@
             }
         }
         
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        }
+        
         // 初始化
         showPage(currentPage);
         
-        // 点击按钮切换
-        nextBtn.addEventListener('click', nextPage);
+        // 点击提示文字翻页
+        hintText.addEventListener('click', () => {
+            nextPage();
+        });
+        
+        // 点击页面任意位置翻页（最后页除外）
+        document.body.addEventListener('click', (e) => {
+            // 只有点击的不是提示文字区域，且不是最后一页时才翻页
+            if (!hintText.contains(e.target) && currentPage < totalPages) {
+                nextPage();
+            }
+        });
         
         // 键盘控制
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space' || e.code === 'ArrowRight' || e.code === 'ArrowDown') {
                 e.preventDefault();
                 nextPage();
+            } else if (e.code === 'ArrowLeft' || e.code === 'ArrowUp') {
+                e.preventDefault();
+                prevPage();
             }
         });
         
         // 触摸滑动支持
         let touchStartY = 0;
+        let touchStartX = 0;
         document.addEventListener('touchstart', (e) => {
             touchStartY = e.touches[0].clientY;
-        });
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
         
         document.addEventListener('touchend', (e) => {
             const touchEndY = e.changedTouches[0].clientY;
-            const diff = touchStartY - touchEndY;
+            const touchEndX = e.changedTouches[0].clientX;
+            const diffY = touchStartY - touchEndY;
+            const diffX = touchStartX - touchEndX;
             
-            if (diff > 50 && currentPage < totalPages) {
-                // 上滑
-                currentPage++;
-                showPage(currentPage);
-            } else if (diff < -50 && currentPage > 1) {
-                // 下滑
-                currentPage--;
-                showPage(currentPage);
+            // 判断是垂直滑动还是水平滑动
+            if (Math.abs(diffY) > Math.abs(diffX)) {
+                // 垂直滑动
+                if (diffY > 50) {
+                    // 上滑，下一页
+                    nextPage();
+                } else if (diffY < -50) {
+                    // 下滑，上一页
+                    prevPage();
+                }
+            } else {
+                // 水平滑动
+                if (diffX > 50) {
+                    // 左滑，下一页
+                    nextPage();
+                } else if (diffX < -50) {
+                    // 右滑，上一页
+                    prevPage();
+                }
             }
         });
+        
+        // 鼠标滚轮支持
+        let wheelTimeout;
+        document.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            
+            // 防抖处理，避免滚轮过快导致翻页失控
+            clearTimeout(wheelTimeout);
+            wheelTimeout = setTimeout(() => {
+                if (e.deltaY > 0 || e.deltaX > 0) {
+                    nextPage();
+                } else if (e.deltaY < 0 || e.deltaX < 0) {
+                    prevPage();
+                }
+            }, 100);
+        }, { passive: false });
     </script>
 </body>
 </html>
