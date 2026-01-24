@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 · cold 的马拉松年度报告</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            background: linear-gradient(90deg, #00d9ff, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+        
+        section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #00d9ff;
+            font-weight: 500;
+        }
+        
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .data-card {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 107, 157, 0.1));
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .data-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .data-card h3 {
+            color: #ff6b9d;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        
+        .data-card .number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #00d9ff;
+            margin-bottom: 10px;
+        }
+        
+        .data-card .description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95em;
+        }
+        
+        .tags-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .tag-sub {
+            display: block;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 5px;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #00d9ff, #ff6b9d);
+        }
+        
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: #00d9ff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00d9ff;
+        }
+        
+        .timeline-date {
+            color: #00d9ff;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-title {
+            font-size: 1.2em;
+            margin-bottom: 8px;
+        }
+        
+        .timeline-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95em;
+        }
+        
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            color: #ff6b9d;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .trend-chart {
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            gap: 30px;
+            padding: 20px 0;
+        }
+        
+        .trend-bar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bar {
+            width: 60px;
+            background: linear-gradient(180deg, #00d9ff 0%, #0f8ba9 100%);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            transition: height 0.5s;
+        }
+        
+        .bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        .trend-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85em;
+        }
+        
+        .race-list {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+        }
+        
+        .race-item {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .race-item:last-child {
+            border-bottom: none;
+        }
+        
+        .race-name {
+            font-size: 1.1em;
+            color: #00d9ff;
+            margin-bottom: 8px;
+        }
+        
+        .race-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+        }
+        
+        .stat span {
+            color: #ff6b9d;
+            font-weight: 500;
+        }
+        
+        .closing {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 50px;
+        }
+        
+        .closing h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #00d9ff;
+            font-weight: 400;
+        }
+        
+        .closing p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        
+        .comparison {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 107, 157, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .comparison .before,
+        .comparison .after {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .comparison .arrow {
+            color: #00d9ff;
+            font-size: 1.5em;
+            padding: 0 20px;
+        }
+        
+        .comparison .number {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #ff6b9d;
+        }
+        
+        .comparison .label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+        
+        .improvement {
+            color: #00d9ff;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .container {
+                padding: 25px 20px;
+            }
+            
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .trend-chart {
+                gap: 15px;
+            }
+            
+            .bar {
+                width: 40px;
+            }
+            
+            .comparison {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .comparison .arrow {
+                transform: rotate(90deg);
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>2025 · 你的马拉松年度报告</h1>
+            <p class="subtitle">这一年，你用脚步丈量了城市</p>
+        </header>
+        
+        <section>
+            <h2 class="section-title">📊 你的年度数据</h2>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h3>参赛次数</h3>
+                    <div class="number">4<span style="font-size: 0.5em">场</span></div>
+                    <p class="description">跨越4个城市，完成1场全程马拉松+3场半程马拉松，从3月的春天跑到12月的冬天</p>
+                </div>
+                
+                <div class="data-card">
+                    <h3>总奔跑距离</h3>
+                    <div class="number">97.195<span style="font-size: 0.5em">公里</span></div>
+                    <p class="description">相当于从上海跑到苏州，比绕西湖跑7圈还多，这一年你真的跑了很远</p>
+                </div>
+                
+                <div class="data-card">
+                    <h3>总用时</h3>
+                    <div class="number">10<span style="font-size: 0.5em">小时</span>42<span style="font-size: 0.5em">分</span></div>
+                    <p class="description">累计10小时42分钟的奔跑，相当于看了3部电影的时间，但你在路上看到了更多风景</p>
+                </div>
+                
+                <div class="data-card">
+                    <h3>最快半马配速</h3>
+                    <div class="number">5:08<span style="font-size: 0.5em">/公里</span></div>
+                    <p class="description">在温州马拉松创造的PB，每公里5分08秒，你比90%的半马选手跑得更快</p>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2 class="section-title">🏷️ 你的年度标签</h2>
+            <div class="tags-container">
+                <div class="tag">
+                    跨城追风者
+                    <span class="tag-sub">在4个城市的赛道留下足迹</span>
+                </div>
+                <div class="tag">
+                    数据控跑者
+                    <span class="tag-sub">用数据记录每一次进步</span>
+                </div>
+                <div class="tag">
+                    PB制造机
+                    <span class="tag-sub">温州马拉松刷新半马最佳</span>
+                </div>
+                <div class="tag">
+                    全程勇士
+                    <span class="tag-sub">完成了人生中的首场全马</span>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2 class="section-title">📈 半马成绩趋势分析</h2>
+            <div class="chart-container">
+                <div class="chart-title">2025年三场半马净成绩对比</div>
+                <div class="trend-chart">
+                    <div class="trend-bar">
+                        <div class="bar" style="height: 118px;" data-value="1:58:42"></div>
+                        <div class="trend-label">宁海<br>3月16日</div>
+                    </div>
+                    <div class="trend-bar">
+                        <div class="bar" style="height: 113px;" data-value="1:53:03"></div>
+                        <div class="trend-label">高淳<br>11月2日</div>
+                    </div>
+                    <div class="trend-bar">
+                        <div class="bar" style="height: 108px; background: linear-gradient(180deg, #ff6b9d 0%, #c44569 100%);" data-value="1:48:37"></div>
+                        <div class="trend-label">温州<br>12月7日</div>
+                    </div>
+                </div>
+                <div class="comparison">
+                    <div class="before">
+                        <div class="number">1:58:42</div>
+                        <div class="label">宁海首场</div>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="after">
+                        <div class="number">1:48:37</div>
+                        <div class="label">温州PB</div>
+                    </div>
+                </div>
+                <div class="improvement">📉 9分45秒的进步，你的每一步都在超越自己</div>
+            </div>
+        </section>
+        
+        <section>
+            <h2 class="section-title">📅 这一年，你都记得</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2025.03.16</div>
+                    <div class="timeline-title">宁海马拉松 · 半程首秀</div>
+                    <div class="timeline-desc">净成绩1:58:42，枪声成绩2:05:35。5公里29分37秒起步，稳扎稳打完成了2025年的第一场半马，从此打开了马拉松的赛季大门</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2025.03.23</div>
+                    <div class="timeline-title">南通马拉松 · 全程突破</div>
+                    <div class="timeline-desc">净成绩5:41:52，完成了人生中第一场全程马拉松。42.195公里的挑战，从起点到终点，你用5小时41分证明了自己可以走得更远</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2025.11.02</div>
+                    <div class="timeline-title">高淳马拉松 · 半马提速</div>
+                    <div class="timeline-desc">净成绩1:53:03，比宁海快了近6分钟。时隔8个月重返赛道，配速从5:38提升到5:23，每一次训练都在赛道上得到了回报</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2025.12.07</div>
+                    <div class="timeline-title">温州马拉松 · 创造PB</div>
+                    <div class="timeline-desc">净成绩1:48:37，半马最佳成绩！比宁海快了近10分钟，比高淳快了4分26秒。5公里27分23秒的稳健开局，最终将配速提升到5:08/公里，这一年，你跑出了最好的自己</div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2 class="section-title">🏆 你的赛事清单</h2>
+            <div class="race-list">
+                <div class="race-item">
+                    <div class="race-name">2025宁海马拉松 <span class="badge">A类赛事</span></div>
+                    <div class="race-stats">
+                        <div class="stat">项目：<span>半程马拉松</span></div>
+                        <div class="stat">净成绩：<span>01:58:42</span></div>
+                        <div class="stat">5公里：<span>00:29:37</span></div>
+                        <div class="stat">10公里：<span>00:58:40</span></div>
+                        <div class="stat">15公里：<span>01:26:32</span></div>
+                        <div class="stat">20公里：<span>01:53:11</span></div>
+                    </div>
+                </div>
+                
+                <div class="race-item">
+                    <div class="race-name">2025南通马拉松 <span class="badge">A类赛事</span></div>
+                    <div class="race-stats">
+                        <div class="stat">项目：<span>马拉松</span></div>
+                        <div class="stat">净成绩：<span>05:41:52</span></div>
+                        <div class="stat">5公里：<span>00:32:31</span></div>
+                        <div class="stat">半程：<span>02:18:26</span></div>
+                        <div class="stat">30公里：<span>03:29:14</span></div>
+                        <div class="stat">全程：<span>05:41:52</span></div>
+                    </div>
+                </div>
+                
+                <div class="race-item">
+                    <div class="race-name">2025高淳马拉松 <span class="badge">A类赛事</span></div>
+                    <div class="race-stats">
+                        <div class="stat">项目：<span>半程</span></div>
+                        <div class="stat">净成绩：<span>01:53:03</span></div>
+                        <div class="stat">5公里：<span>00:30:11</span></div>
+                        <div class="stat">10公里：<span>00:57:25</span></div>
+                        <div class="stat">15公里：<span>01:22:50</span></div>
+                        <div class="stat">20公里：<span>01:47:47</span></div>
+                    </div>
+                </div>
+                
+                <div class="race-item">
+                    <div class="race-name">温州银行·2025温州马拉松 <span class="badge">A类赛事</span></div>
+                    <div class="race-stats">
+                        <div class="stat">项目：<span>半程马拉松</span></div>
+                        <div class="stat">净成绩：<span>01:48:37</span></div>
+                        <div class="stat">5公里：<span>00:27:23</span></div>
+                        <div class="stat">10公里：<span>00:53:35</span></div>
+                        <div class="stat">15公里：<span>01:19:02</span></div>
+                        <div class="stat">20公里：<span>01:43:27</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2 class="section-title">🔍 这一年，你发现了什么</h2>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h3>稳步提升</h3>
+                    <p class="description">从宁海的1:58:42到温州的1:48:37，半马成绩提升10分钟，平均每月进步1.3秒/公里，这就是从数据角度讲故事的节奏感</p>
+                </div>
+                
+                <div class="data-card">
+                    <h3>越跑越稳</h3>
+                    <p class="description">5公里分段从宁海的29:37提速到温州的27:23，不仅配速在提升，你的起跑策略也越来越成熟</p>
+                </div>
+                
+                <div class="data-card">
+                    <h3>全马成就</h3>
+                    <p class="description">南通5:41:52完成首场全马，从半程到全程的距离，你用一场比赛证明了自己可以挑战更大的目标</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="closing">
+            <h2>✨ 这一年，你最想说的一句话</h2>
+            <p>用数据记录脚步，用速度丈量城市<br>从半程到全程，从春天到冬天<br>2025的赛道上，你跑出了最好的自己</p>
+            <br>
+            <p style="color: #00d9ff; font-size: 1.2em;">2026，继续奔跑吧！</p>
+        </div>
+    </div>
+</body>
+</html>
