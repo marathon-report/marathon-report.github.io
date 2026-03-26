@@ -4,16 +4,16 @@
 
 ## 查看
 
-- **主入口** (幻灯片式): [marathon.comesherry.top](https://marathon.comesherry.top)
-- 滚动长页版: `index_scrolly.html`
+- **主入口** (滚动长页): [marathon.comesherry.top](https://marathon.comesherry.top)
+- 幻灯片版: `index_slides.html`
 - 历史版本 (网易云风格): `index_v1.html`
 
 ## 页面说明
 
 | 文件 | 说明 |
 |------|------|
-| `index.html` | 幻灯片式翻页，沉浸式体验 |
-| `index_scrolly.html` | 滚动长页式，快速浏览 |
+| `index.html` | 滚动长页式，快速浏览 |
+| `index_slides.html` | 幻灯片式翻页，沉浸式体验 |
 | `index_v1.html` | 2025 网易云风格版本 |
 
 ## 本地预览
