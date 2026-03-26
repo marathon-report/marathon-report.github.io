@@ -1,13 +1,31 @@
 # 马拉松年度报告
 
-轻量的年度跑步总结页面，用图表和时间线记录每一场马拉松。
+用数据记录脚步，用速度丈量城市。年度跑步总结页面。
 
 ## 查看
-- 完整版: index.html
-- 一页速览: index_one_page.html
+
+- **主入口** (幻灯片式): [marathon.comesherry.top](https://marathon.comesherry.top)
+- 滚动长页版: `index_scrolly.html`
+- 历史版本 (网易云风格): `index_v1.html`
+
+## 页面说明
+
+| 文件 | 说明 |
+|------|------|
+| `index.html` | 幻灯片式翻页，沉浸式体验 |
+| `index_scrolly.html` | 滚动长页式，快速浏览 |
+| `index_v1.html` | 2025 网易云风格版本 |
 
 ## 本地预览
-- 直接双击 HTML 或用任意静态服务器打开仓库根目录。
 
-## 贡献
-- 欢迎提 PR，保持版式简洁、数据真实。
+```bash
+# 方式1: 直接打开
+双击 index.html
+
+# 方式2: 使用静态服务器
+npx serve .
+```
+
+## 技术
+
+纯 HTML/CSS/JS，无需构建，直接托管到 GitHub Pages。
